@@ -35,10 +35,8 @@ const dezenas = (numero, tamanho) =>{
 const centenas = (numero, tamanho)=>{
     if(numeros.centenas.hasOwnProperty(numero)) return 'cem'
     if(numero[tamanho-2]=='0'){
-        console.log(numero)
         return numeros.centenas[numero[0]+'00'] + ' e '.concat(unidades(numero[tamanho-1], tamanho))
     }
-    console.log(numero.substring(1))
     return numeros.centenas[numero[0]+'00'] + ' e '.concat(dezenas(numero.substring(1), tamanho-1))
 }
 const milhar = (numero, tamanho)=>{
