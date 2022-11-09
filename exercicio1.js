@@ -14,6 +14,9 @@ const numeros = {
                 centenas:{
                     '100':'cento(s)', '200':'duzentos', '300':'trezentos', '400':'quatrocentos', '500':'quinhentos', 
                     '600':'seiscentos', '700':'setecentos', '800':'oitocentos', '900':'novecentos'
+                },
+                milhares:{
+                    '1000':'mil', '2000':'dois mil', '3000':'três mil', '4000':'quatro mil', '5000':'cinco mil', '6000':'seis mil', '7000':'sete mil','8000':'oito mil', '9000': 'nove mil'
                 }
 }
 const razo = (numero, tamanho)=>{
@@ -44,8 +47,20 @@ const centenas = (numero, tamanho)=>{
     console.log(numero.substring(1))
     return numeros.centenas[numero[0]+'00'] + ' e '.concat(dezenas(numero.substring(1), tamanho-1))
 }
-const milhar = ()=>{
-    
+const milhar = (numero, tamanho)=>{
+    if(numeros.milhares.hasOwnProperty(numero)){
+        return numeros.milhares[numero]
+    }
+    else{
+        if(numero[1]=='0' && numero[2]!='0'){
+            return numeros.milhares[numero[0]+'000'] +' e '+ dezenas(numero.substring(2), tamanho-2) 
+        }
+        else if(numero[1]=='0' && numero[2]=='0'){
+            console.log(numero[tamanho-1])
+            return numeros.milhares[numero[0]+'000'] +' e '+ unidades(numero[tamanho-1], 1) 
+        }
+        return numeros.milhares[numero[0]+'000'] +' e '+ centenas(numero.substring(1), tamanho-1)
+    }
 }
 
 const numeroExtenso = (numero) =>{
@@ -58,6 +73,9 @@ const numeroExtenso = (numero) =>{
     }
     else if(tamanho===3){
         return centenas(numero, tamanho)
+    }
+    else if(tamanho === 4){
+        return milhar(numero, tamanho)
     }
 }
 rl.question("Escolha um número entre 0 à 9999", function (answer) {
